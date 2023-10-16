@@ -51,9 +51,9 @@ export const ourFileRouter = {
 
          // vectorize and index entire document
    
-         const pineconeIndex = await pinecone
-         .Index("docuquest")
-         .namespace(metadata.userId);
+         const pineconeIndex = pinecone
+           .Index("docuquest")
+           .namespace(metadata.userId);
          
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
@@ -63,7 +63,7 @@ export const ourFileRouter = {
           pineconeIndex,
         });
 
-
+        
         await db.file.update({
           data: {
             uploadStatus: 'SUCCESS',
@@ -73,7 +73,7 @@ export const ourFileRouter = {
           },
         })
       } catch (error) {
-        console.log(error) 
+        console.log("error: ", error)
         await db.file.update({
           data: {
             uploadStatus:"FAILED",
