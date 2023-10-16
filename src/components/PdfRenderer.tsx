@@ -29,6 +29,7 @@ import SimpleBar from 'simplebar-react'
 import PdfFullScreen from './PdfFullScreen'
 
 
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 interface PdfRendererProps {
@@ -36,6 +37,7 @@ interface PdfRendererProps {
 }
 
 const PdfRenderer = ({url} : PdfRendererProps) => {
+
   const { toast } = useToast()
   const { width, ref } = useResizeDetector()
   const [numPages, setNumPages] = useState<number>()
@@ -134,6 +136,8 @@ const PdfRenderer = ({url} : PdfRendererProps) => {
             <ChevronUp className='h-4 w-4' />
           </Button>
         </div>
+
+      
 
         <div className='space-x-2'>
           <DropdownMenu>
