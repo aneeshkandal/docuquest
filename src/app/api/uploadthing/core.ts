@@ -37,15 +37,24 @@ export const ourFileRouter = {
 
         const blob = await response.blob()
         const loader = new PDFLoader(blob)
-        const pageLevelDocs = await loader.load()
+        const pageLevelDocs = (await loader.load()).map((doc) => {
+          return {
+            ...doc,
+            metadata: {
+              ...doc.metadata,
+              "file.id": createdFile.id,
+            },
+          };
+        });
+        
         const pagesAmt = pageLevelDocs.length
 
          // vectorize and index entire document
    
          const pineconeIndex = await pinecone
          .Index("docuquest")
-         .namespace(createdFile.id);
-
+         .namespace(metadata.userId);
+         
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
         })
